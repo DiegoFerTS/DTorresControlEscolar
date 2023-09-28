@@ -1,0 +1,48 @@
+﻿@model ML.Materia
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2 class="text-center">Formulario</h2>
+<hr />
+<br />
+<div class="container">
+    @using (Html.BeginForm("Form", "Materia", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+
+        @Html.HiddenFor(model => model.IdMateria)
+
+        <div class="row">
+            <div class="col-6">
+                @Html.LabelFor(model => model.Nombre)
+                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @placeholder = "Nombre de la materia", @style = "width: 100%;" })
+                <label style="color: red;">
+                    @Html.ValidationMessageFor(model => model.Nombre)
+                </label>
+            </div>
+            <div class="col-6">
+                @Html.LabelFor(model => model.Costo)
+                @Html.TextBoxFor(model => model.Costo, new { @class = "form-control", @placeholder = "100.00", @style = "width: 100%;", @type="number"})
+                <label style="color: red;">
+                    @Html.ValidationMessageFor(model => model.Costo)
+                </label>
+
+            </div>
+        </div>
+<br /><br /><center>
+            @if (Model.IdMateria == null || Model.IdMateria == 0)
+            {
+                <button type="submit" id="boton" class="btn btn-success">Registrar materia</button>
+
+            }
+            else
+            {
+                <button type="submit" id="boton" class="btn btn-success">Actualizar materia</button>
+
+            }
+        </center>
+    }
+</div>
+

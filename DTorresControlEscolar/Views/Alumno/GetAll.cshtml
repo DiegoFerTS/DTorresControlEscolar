@@ -1,0 +1,46 @@
+﻿@model ML.Alumno
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">CONTROL ESCOLAR</h2>
+<hr />
+<br />
+<h3 class="text-center">Alumnos</h3>
+<br />
+<a class="btn btn-primary" href="@Url.Action("Form", "Alumno")">Registrar un nuevo alumno</a>
+<br /><hr />
+
+@if (Model.Alumnos.Count > 0)
+{
+    <table class="table table-hover">
+        <thead class="bg-black text-light text-center">
+        <th>Id</th>
+        <th>Nombre</th>
+        <th>Apellido paterno</th>
+        <th>Apellido materno</th>
+        <th>Actualizar</th>
+        <th>Eliminar</th>
+        </thead>
+        <tbody>
+            @foreach (ML.Alumno alumno in Model.Alumnos)
+            {
+                <tr class="text-center">
+                    <td>@alumno.IdAlumno</td>
+                    <td>@alumno.Nombre</td>
+                    <td>@alumno.ApellidoPaterno</td>
+                    <td>@alumno.ApellidoMaterno</td>
+                    <td class="bg-secondary text-center"><a href="@Url.Action("Form", "Alumno", new {idAlumno = alumno.IdAlumno})"><i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></i></a></td>
+                    <td class="bg-secondary text-center"><a href="@Url.Action("Delete", "Alumno", new {idAlumno = alumno.IdAlumno})"  onclick="return confirm('¿Estas seguro que quieres eliminar a este alumno?')"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></a></td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-danger">No se encontraron datos.</div>
+}
+

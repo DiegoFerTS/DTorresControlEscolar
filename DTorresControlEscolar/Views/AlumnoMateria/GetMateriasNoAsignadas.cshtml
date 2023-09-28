@@ -1,0 +1,91 @@
+﻿@model ML.AlumnoMateria
+@{
+    ViewBag.Title = "GetMateriasNoAsignadas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2 class="center">MATERIAS NO SIGNADAS</h2>
+<hr />
+<br />
+
+<div>
+    <div>
+        <label>Nombre del alumno:</label>
+        <br />
+        <input type="text" class="form-control" value=" @Session["NombreAlumno"]" readonly />
+        <br />
+        <input type="text" class="form-control" value=" @Session["IdAlumno"]" readonly style="display: none;" />
+    </div>
+</div>
+<br />
+
+@if (Model.AlumnoMaterias.Count != 0 && Model.AlumnoMaterias != null)
+{
+
+
+    <div class="container">
+
+        @using (Html.BeginForm("AddMaterias", "AlumnoMateria", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <table class="table table-hover">
+                <thead class="text-center table-dark">
+                <th>Materia</th>
+                <th>Costo</th>
+                <th>Agregar</th>
+                </thead>
+                <tbody class="text-center">
+                    @foreach (ML.AlumnoMateria alumnoMateria in Model.AlumnoMaterias)
+                    {
+                        <tr>
+                            <td>
+                                @alumnoMateria.Materia.Nombre
+                            </td>
+                            <td>
+                                @alumnoMateria.Materia.Costo
+                            </td>
+                            <td class="bg-dark">
+                                <input class="form-check-input" type="checkbox" name="materia" value="@Session["IdAlumno"],@alumnoMateria.Materia.IdMateria" 
+                                       id="flexCheckDefault" onchange="Sumar(@alumnoMateria.Materia.Costo, this)">
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div>
+                <label for="txt__costoTotal">Costo total:</label>
+                <input type="text" class="form-control" id="txt__costoTotal" value="0" readonly />
+            </div>
+
+            <center>
+                <button class="btn btn-primary" type="submit">Agregar materias</button>
+            </center>
+        }
+
+    </div>
+}
+else
+{
+    <div class="alert alert-danger">No se encontraron datos.</div>
+}
+
+
+<script type="text/javascript">
+    function Sumar(costo, e) {
+        var txt__costoTotal = document.getElementById("txt__costoTotal");
+        var total = txt__costoTotal.value;
+
+        if (e.checked) {
+            total = parseFloat(total) + parseFloat(costo);
+        } else {
+            total = parseFloat(total) - parseFloat(costo);
+        }
+
+        if (total < 0) {
+            total = 0;
+        }
+
+        txt__costoTotal.value = "";
+        txt__costoTotal.value = parseFloat(total);
+    }
+</script>

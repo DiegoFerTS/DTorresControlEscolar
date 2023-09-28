@@ -1,0 +1,82 @@
+﻿@model ML.Alumno
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Formulario</h2>
+<hr />
+<br />
+<div class="container">
+    @using (Html.BeginForm("Form", "Alumno", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+
+        @Html.HiddenFor(model => model.IdAlumno)
+
+        <div class="row">
+            <div class="col-6">
+                @Html.LabelFor(model => model.Nombre)
+                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @placeholder = "Nombre del alumno", @style = "width: 100%;", @id = "txt__Nombre", @onkeyup = "validarLetras('Nombre','Nombre')", @onblur = "validarLetras('Nombre','Nombre')" })
+                <label id="lbl__Nombre"></label>
+
+            </div>
+            <div class="col-6">
+                @Html.LabelFor(model => model.ApellidoPaterno)
+                @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", @placeholder = "Apellido paterno", @style = "width: 100%;", @id = "txt__ApellidoPaterno", @onkeyup = "validarLetras('ApellidoPaterno','ApellidoPaterno')", @onblur = "validarLetras('ApellidoPaterno','ApellidoPaterno')" })
+                <label id="lbl__ApellidoPaterno"></label>
+
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-6">
+                @Html.LabelFor(model => model.ApellidoMaterno)
+                @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", @placeholder = "Apellido materno", @style = "width: 100%;", @id = "txt__ApellidoMaterno", @onkeyup = "validarLetras('ApellidoMaterno','ApellidoMaterno')", @onblur = "validarLetras('ApellidoMaterno','ApellidoMaterno')" })
+                <label id="lbl__ApellidoMaterno"></label>
+
+            </div>
+        </div><br /><br /><center>
+            @if (Model.IdAlumno == null || Model.IdAlumno == 0)
+            {
+                <button type="submit" id="boton" class="btn btn-success">Registrar alumno</button>
+
+            }
+            else
+            {
+                <button type="submit" id="boton" class="btn btn-success">Actualizar alumno</button>
+
+            }
+        </center>
+    }
+</div>
+
+
+<script>
+
+    function validarLetras(txt, lbl) {
+        var regex = /^[a-zA-Z\s]{1,50}$/;
+
+        var datos = $("#txt__" + txt).val();
+
+        console.log(datos);
+
+        if (regex.test(datos)) {
+            $("#lbl__" + lbl).text("");
+            $("#txt__" + txt).css("border", "2px solid green");
+            $("#txt__" + txt).css("background", "rgba(0, 60, 0, 0.2)");
+            console.log("cumple");
+        } else {
+            $("#lbl__" + lbl).text("Solo se aceptan letras y espacios.");
+            $("#lbl__" + lbl).css("color", "red");
+            $("#txt__" + txt).css("border", "2px solid red");
+            $("#txt__" + txt).css("background", "rgba(60, 0, 0, 0.2)");
+
+            console.log("no cumple");
+
+        }
+    }
+
+</script>
+

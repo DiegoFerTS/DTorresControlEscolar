@@ -1,0 +1,50 @@
+﻿@model ML.AlumnoMateria
+@{
+    ViewBag.Title = "GetAlumnoMateria";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="center">MATERIAS ASIGNADAS</h2>
+<hr />
+<br />
+
+<div>
+    <div>
+        <label>Nombre del alumno:</label>
+        <br />
+        <input type="text" class="form-control" value=" @Session["NombreAlumno"]" readonly />
+        <br />
+        <input type="text" class="form-control" value=" @Session["IdAlumno"]" readonly style="display: none;" />
+    </div>
+    <div>
+        <a class="btn btn-primary"  href="@Url.Action("GetMateriasNoAsignadas", "AlumnoMateria")">Añadir materia</a>
+    </div>
+</div>
+<br />
+
+@if (Model.AlumnoMaterias.Count > 0 && Model.AlumnoMaterias != null)
+{
+    <div class="container">
+        <table class="table table-hover">
+            <thead class="text-center table-dark">
+                <th>Materia</th>
+                <th>Costo</th>
+                <th>Quitar</th>
+            </thead>
+            <tbody class="text-center">
+                @foreach (ML.AlumnoMateria alumnoMateria in Model.AlumnoMaterias)
+                {
+                    <tr>
+                        <td>@alumnoMateria.Materia.Nombre</td>
+                        <td>@alumnoMateria.Materia.Costo</td>
+                        <td class="bg-dark"><a href="@Url.Action("DeleteMateriaAsignada", "AlumnoMateria", new {idAlumno = alumnoMateria.Alumno.IdAlumno, idMateria = alumnoMateria.Materia.IdMateria})"><i class="fa-solid fa-trash" style="color: #ffffff;"></i> </a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger">No se encontraron datos.</div>
+}

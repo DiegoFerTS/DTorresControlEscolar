@@ -1,0 +1,34 @@
+﻿@model ML.Alumno
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="center">ASIGNAR MATERIA</h2>
+<hr /><br />
+<h3>Alumnos</h3>
+<br />
+
+@if (Model.Alumnos.Count > 0)
+{
+<div class="container">
+    <table class="table table-hover">
+        <thead class="text-center table-dark">
+            <th>Id</th>
+            <th>Alumno</th>
+            <th>Asignar materia</th>
+        </thead>
+        <tbody class="text-center">
+            @foreach (ML.Alumno alumno in Model.Alumnos) {
+                <tr>
+                    <td>@alumno.IdAlumno</td>
+                    <td>@alumno.Nombre @alumno.ApellidoPaterno @alumno.ApellidoMaterno </td>
+                    <td class="bg-dark"><a href="@Url.Action("GetMateriasAsignadas", "AlumnoMateria", new {idAlumno = alumno.IdAlumno, nombreAlumno = alumno.Nombre + " " + alumno.ApellidoPaterno + " " + alumno.ApellidoMaterno})"><i class="fa-solid fa-school" style="color: #ffffff;"></i></a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+} else {
+    <div class="alert alert-danger">No se encontraron datos.</div>
+}

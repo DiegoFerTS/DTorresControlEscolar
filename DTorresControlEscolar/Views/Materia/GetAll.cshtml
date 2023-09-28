@@ -1,0 +1,44 @@
+﻿@model ML.Materia
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">CONTROL ESCOLAR</h2>
+<hr />
+<br />
+<h3 class="text-center">Materias</h3>
+<br />
+<a class="btn btn-primary" href="@Url.Action("Form", "Materia")">Registrar una nueva materia</a>
+<br />
+<hr />
+
+@if (Model.Materias.Count > 0)
+{
+    <table class="table table-hover">
+        <thead class="bg-black text-light text-center">
+        <th>Id</th>
+        <th>Nombre</th>
+        <th>Costo</th>
+        <th>Actualizar</th>
+        <th>Eliminar</th>
+        </thead>
+        <tbody>
+            @foreach (ML.Materia materia in Model.Materias)
+            {
+                <tr class="text-center">
+                    <td>@materia.IdMateria</td>
+                    <td>@materia.Nombre</td>
+                    <td>@materia.Costo</td>
+                    <td class="bg-secondary text-center"><a href="@Url.Action("Form", "Materia", new {idMateria = materia.IdMateria})"><i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></i></a></td>
+                    <td class="bg-secondary text-center"><a href="@Url.Action("Delete", "Materia", new {idMateria = materia.IdMateria})"  onclick="return confirm('¿Estas seguro que quieres eliminar a esta materia?')"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></a></td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-danger">No se encontraron datos.</div>
+}
